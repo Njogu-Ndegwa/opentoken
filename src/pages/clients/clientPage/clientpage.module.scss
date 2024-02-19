@@ -1,0 +1,16 @@
+.chartsContainer {
+    display: flex;
+    justify-content: space-around;
+    // height: 45vh;
+    margin-top: 2rem;
+
+    .chartA {
+        width: 95%;
+        height: 100%;
+
+    }
+    .chartB {
+        width: 25%;
+        height: 100%;
+    }
+}

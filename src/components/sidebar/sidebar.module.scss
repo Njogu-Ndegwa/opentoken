@@ -1,0 +1,52 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.089);
+    float: left;
+
+    margin-right: 1rem;
+
+    ul {
+        margin-top: 2rem;
+    }
+
+    li {
+        list-style: none;
+        margin-bottom: 1rem;
+        font-size: 16px;
+        font-family: "DM Sans";
+        font-weight: 600;
+        .link {
+            text-decoration: none;
+            color: white;
+            // padding: 10px;
+            height: 33px;
+            display: flex;
+            align-items: center;
+        }
+        .activeLink {
+            color: black;
+            text-decoration: none;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            height: 33px;
+            width: 180px;
+            border-radius: 20px;
+
+        }
+        .icon {
+            margin-right: 0.5rem;
+            padding-left: 1rem;
+        }
+    }
+}
+
+.detail {
+background-color: rgba(243, 243, 243, 0);
+width: 99%;
+height: calc(100vh - 70px);
+padding-top: 10px;
+margin-right: 1rem;
+// padding-left: 2rem;
+}

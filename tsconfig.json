@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "target": "es5",
+      "module": "ES6",  // Change this line
+      // Other options...
+    },
+    // Exclude node_modules and other directories...
+  }
+  

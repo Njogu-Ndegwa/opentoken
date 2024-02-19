@@ -1,0 +1,97 @@
+.cardContainer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0.7rem;
+    font-family: "DM Sans";
+    .card {
+        min-height: 80px;
+        width: 20%;
+        border-radius: 5px;
+        padding: 10px;
+        
+    }
+
+    .one {
+        background: linear-gradient(to right, #9574dd, #b6a0ea);
+    }
+
+    .two {
+        background: linear-gradient(to right, #f86060, #fa8686);
+    }
+
+    .three {
+        background: linear-gradient(to right, #3864ce, #3e90f8);
+    }
+
+    .four {
+        background: linear-gradient(to right, #f79154, #feac64)
+    }
+    .outerCardContainer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        // padding: 10px;
+        .leftSideCard{
+            width: 58%;
+            height: 100%;
+            .topP {
+                color: white;
+                font-size: 15px;
+                margin: 0;
+            }
+
+            .bottomP{
+                margin-top: 1rem;
+                margin-bottom: 0;
+                padding: 0;
+                font-size: 10px;
+                color: white;
+            }
+            .valueP {
+                margin-top: -0.1rem;
+                color: white;
+            }
+        }
+        .rightSideCard {
+            width: 38%;
+            height: 100%;
+            .topP {
+                font-size: 10px;
+                color: white;
+                margin: 0;
+                text-align: right;
+            }
+            .bottomP {
+                margin: 0.2rem;
+                font-size: 12px;
+                color: white;
+                text-align: right;
+            }
+        }
+    }
+}
+
+.chartsContainer {
+    display: flex;
+    justify-content: space-around;
+    height: 55vh;
+    margin-top: 2rem;
+
+    p{
+        margin-top: 2rem;
+        color: white;
+        font-size: 18px;
+        font-family: "DM Sans";
+
+    }
+    .chartA {
+        width: 70%;
+        height: 100%;
+
+    }
+    .chartB {
+        width: 25%;
+        height: 100%;
+    }
+}

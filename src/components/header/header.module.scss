@@ -1,0 +1,43 @@
+.header {
+    height: 70px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.089);
+    .headerContent {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .left {
+            display: flex;
+            // justify-content: space-between;
+            width: 40vw;
+
+            img {
+                width: 230px;
+                margin-right: 1rem;
+            }
+            p{
+                font-size: 24px;
+                font-family: "DM Sans";
+                color: white;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+        .right {
+            color: white;
+
+            .bellIcon {
+                font-size: 20px;
+                margin-right: 1.7rem;
+            }
+
+            .userIcon {
+                font-size: 30px;
+                margin-right: 1.7rem;
+            }
+        }
+    }
+    // position: absolute;
+}
