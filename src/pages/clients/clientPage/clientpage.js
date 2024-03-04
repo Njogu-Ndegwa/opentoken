@@ -143,7 +143,7 @@ export function ClientPage({ }) {
                                         >
                                             <FormControl orientation="horizontal" size="sm">
                                                 <FormLabel style={{color: "white"}}>Rows per page:</FormLabel>
-                                                <Select style={{backgroundColor: "rgba(255, 255, 255, 0)", border: "1px solid #546a9b", color: "#546a9b"}} onChange={handleChangeRowsPerPage} value={rowsPerPage}>
+                                                <Select style={{backgroundColor: "rgba(255, 255, 255, 0)", border: "1px solid #546a9b", color: "white"}} onChange={handleChangeRowsPerPage} value={rowsPerPage}>
                                                     <Option value={5}>5</Option>
                                                     <Option value={10}>10</Option>
                                                     <Option value={25}>25</Option>
@@ -165,7 +165,7 @@ export function ClientPage({ }) {
                                                     onClick={() => handleChangePage(page - 1)}
                                                     sx={{ bgcolor: 'background.surface' }}
                                                 >
-                                                    <KeyboardArrowLeftIcon />
+                                                    <KeyboardArrowLeftIcon style={{ backgroundColor: "rgba(255, 255, 255, 0)"}} />
                                                 </IconButton>
                                                 <IconButton
                                                     size="sm"

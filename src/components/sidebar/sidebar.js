@@ -45,6 +45,28 @@ export default function Sidebar() {
               <FontAwesomeIcon className={style.icon} icon={faToggleOn} />
                 Activation Codes</NavLink>
             </li>
+            <li>
+              <NavLink className={({isActive}) => 
+                isActive ? style.activeLink : style.link
+              }  to={`/dashboard/contacts/3`}>
+              <FontAwesomeIcon className={style.icon} icon={faToggleOn} />
+                Messages</NavLink>
+            </li>
+            <li>
+              <NavLink className={({isActive}) => 
+                isActive ? style.activeLink : style.link
+              }  to={`/dashboard/contacts/3`}>
+              <FontAwesomeIcon className={style.icon} icon={faToggleOn} />
+                Users</NavLink>
+            </li>
+
+            <li>
+              <NavLink className={({isActive}) => 
+                isActive ? style.activeLink : style.link
+              }  to={`/dashboard/contacts/3`}>
+              <FontAwesomeIcon className={style.icon} icon={faToggleOn} />
+                Inventory</NavLink>
+            </li>
           </ul>
         </nav>
       </div>

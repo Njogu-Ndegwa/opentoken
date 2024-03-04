@@ -1,9 +1,7 @@
-import { createBrowserRouter } from "react-router-dom"
-import Home from "./pages/home/home"
+import { createBrowserRouter, Navigate } from "react-router-dom"
 import Dashboard from "./pages/dashboard/dashboard"
 import ErrorPage from "./error-page"
 import { Reports } from "./pages/reports/reports"
-// import { ClientPage } from "./pages/clients/clientPage/clientpage"
 import { ClientPage } from "./pages/clients/clientPage/clientpage"
 import { Login } from "./pages/authentication/login"
 import { ProtectedRoute } from "./pages/authentication/protectedRoute"
@@ -14,7 +12,7 @@ import TableStickyHeader from "./pages/test/test"
 export const router = createBrowserRouter([
     {
         path: '',
-        element: <Home/>,
+        element: <Navigate to="/dashboard/reports" />,
         errorElement: <ErrorPage />,
     },
     {
@@ -33,11 +31,13 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
+        exact: true,
         element: <AuthProvider><ProtectedRoute> <Dashboard/> </ProtectedRoute></AuthProvider> ,
         children: [
             {
               path: "reports",
               element: <Reports />,
+
             },
             {
               path: "clients",
