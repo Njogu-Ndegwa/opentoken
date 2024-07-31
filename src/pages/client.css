@@ -1,0 +1,30 @@
+
+.table-container {
+    overflow-y: auto;
+    height: 100%;
+    margin-top: 0.7rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th {
+    background-color: rgba(72, 116, 196);
+    color: white;
+    padding: 10px;
+    border: 1.5px solid #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+tr:nth-child(even) {
+    background-color: rgb(236, 236, 236); 
+}
+tr:nth-child(odd) {
+    background-color: #d1d1d1;
+}
+td {
+    padding: 10px;
+    border: 1.5px solid #fff;
+}

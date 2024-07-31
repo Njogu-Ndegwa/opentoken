@@ -1,7 +1,11 @@
-import * as React from 'react';
+
+import * as React from 'react'
+import { CustomCard } from "../../../components/card/card"
+import style from './clientpage.module.scss'
+import moment from "moment";
 import Table from '@mui/joy/Table';
 import Sheet from '@mui/joy/Sheet';
-import { CustomCard } from '../../components/card/card';
+import Chip from '@mui/joy/Chip';
 import {
     Box,
     FormControl,
@@ -13,31 +17,25 @@ import {
 } from "@mui/joy";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-const rows = [
-    createData('1', 159, 6.0, 24, 4.0),
-    createData('2', 237, 9.0, 37, 4.3),
-    createData('3', 262, 16.0, 24, 6.0),
-    createData('4', 305, 3.7, 67, 4.3),
-    createData('5', 356, 16.0, 49, 3.9),
-    createData('6', 159, 6.0, 24, 4.0),
-    createData('7', 237, 9.0, 37, 4.3),
-    createData('8', 262, 16.0, 24, 6.0),
-    createData('9', 305, 3.7, 67, 4.3),
-    createData('10', 356, 16.0, 49, 3.9),
-];
+import { useQuery } from "@apollo/client";
+import { getAllAssetAccountsForClientQuery } from "./queries";
+import { useAuth } from "../../authentication/hooks/useAuth";
+import { USER_PREF_STORAGE_KEY } from "../../authentication/constants/auth";
 
-function sum(column) {
-    return rows.reduce((acc, row) => acc + row[column], 0);
-}
 function labelDisplayedRows({ from, to, count }) {
     return `${from}–${to} of ${count !== -1 ? count : `more than ${to}`}`;
 }
-export default function TableStickyHeader() {
+
+export function ClientPage({ 
+    data,
+    columns
+}) {
+    const userId = localStorage.getItem("user_id")
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const { loading, error, data } = useQuery(getAllAssetAccountsForClientQuery, {
+        variables: { clientId: userId, first: 20 }
+    })
     const handleChangePage = (newPage) => {
         setPage(newPage);
     };
@@ -53,10 +51,15 @@ export default function TableStickyHeader() {
             ? rows.length
             : Math.min(rows.length, (page + 1) * rowsPerPage);
     };
+    if (data) {
+        //     console.log(data.getAllAssetAccountsForClient?.page?.edges, "----37----")
+        // rows = data.getAllAssetAccountsForClient?.page?.edges
+    }
+
     return (
         <div style={{ display: "flex", marginTop: "2rem", justifyContent: "space-around" }}>
             <CustomCard>
-                <Typography level="body-sm" textAlign="center" sx={{ mb: 2 }}>
+                <Typography level="body-sm" textAlign="center" sx={{ mb: 2, marginTop: "1rem", color: "white" }}>
                     The table body is scrollable.
                 </Typography>
                 <Sheet sx={{ maxHeight: 400, overflow: 'auto', background: "#202c74" }}>
@@ -81,29 +84,33 @@ export default function TableStickyHeader() {
                               },
                         })}
                     >
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Calories</th>
-                                <th>Fat&nbsp;(g)</th>
-                                <th>Carbs&nbsp;(g)</th>
-                                <th>Protein&nbsp;(g)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rows.map((row) => (
-                                <tr key={row.name}>
-                                    <td>{row.name}</td>
-                                    <td>{row.calories}</td>
-                                    <td>{row.fat}</td>
-                                    <td>{row.carbs}</td>
-                                    <td>{row.protein}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                        <tfoot>
+                            <thead>
                                 <tr>
-                                    <td colSpan={5}>
+                                    <th>Client Name</th>
+                                    <th>Account Number</th>
+                                    <th>Phone Number</th>
+                                    <th>Total Paid</th>
+                                    <th>Unlock Price</th>
+                                    <th>Status</th>
+                                    <th>Created at</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rows.map((row) => (
+                                    <tr key={row.phone_number}>
+                                        <td>{row.username}</td>
+                                        <td>{row.account_number}</td>
+                                        <td>{row.phone_number}</td>
+                                        <td>{row.total_paid}</td>
+                                        <td>{row.unlock_price}</td>
+                                        <td>{row.status === "Enabled" ? <Chip color="success" style={{ backgroundColor: 'green', color: "white" }} variant="solid">Enabled</Chip> : <Chip color="danger" style={{ backgroundColor: 'red', color: "white" }} variant="solid">Disabled</Chip>}</td>
+                                        <td>{moment(row.created_at).format('D MMMM YYYY')}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan={7}>
                                         <Box
                                             sx={{
                                                 display: 'flex',
@@ -114,7 +121,7 @@ export default function TableStickyHeader() {
                                         >
                                             <FormControl orientation="horizontal" size="sm">
                                                 <FormLabel style={{color: "white"}}>Rows per page:</FormLabel>
-                                                <Select style={{backgroundColor: "rgba(255, 255, 255, 0)", border: "1px solid   "}} onChange={handleChangeRowsPerPage} value={rowsPerPage}>
+                                                <Select style={{backgroundColor: "rgba(255, 255, 255, 0)", border: "1px solid #546a9b", color: "white"}} onChange={handleChangeRowsPerPage} value={rowsPerPage}>
                                                     <Option value={5}>5</Option>
                                                     <Option value={10}>10</Option>
                                                     <Option value={25}>25</Option>
@@ -136,7 +143,7 @@ export default function TableStickyHeader() {
                                                     onClick={() => handleChangePage(page - 1)}
                                                     sx={{ bgcolor: 'background.surface' }}
                                                 >
-                                                    <KeyboardArrowLeftIcon />
+                                                    <KeyboardArrowLeftIcon style={{ backgroundColor: "rgba(255, 255, 255, 0)"}} />
                                                 </IconButton>
                                                 <IconButton
                                                     size="sm"
@@ -157,9 +164,11 @@ export default function TableStickyHeader() {
                                     </td>
                                 </tr>
                             </tfoot>
-                    </Table>
-                </Sheet>
-            </CustomCard>
-        </div>
-    );
+                        </Table>
+                        {/* </div> */}
+                    </Sheet>
+                </CustomCard>
+            </div>
+    )
 }
+

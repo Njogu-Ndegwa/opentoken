@@ -1,38 +1,433 @@
-.App {
-  text-align: center;
-}
+/* .section-container {
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 150vh;
+  position: relative;
+}
+
+.section {
+  height: 140vh;
+  width: 47vw;
+  border-radius: 5%;
+  position: relative;
+  z-index: -1;
+}
+
+.section-r {
+  background-color: rgba(255, 192, 0, 0.3);
+}
+
+.section-l {
+  background-color: rgba(72, 116, 196, 0.3);
+}
+
+.line {
+  width: 94%;position: absolute;
+  height: 10px;
+  background-color: rgba(72, 116, 196);
+  z-index: 1;
+}
+
+.up {
+  margin-bottom: 4rem;
+  width: 150px;
+  height: 35px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.down {
+  margin-top: 4rem;
+  width: 150px;
+  height: 35px;
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.lower-section {
+  height: 40%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  bottom: 10px;
+  background: rgba(72, 116, 196, 0.4); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+}
+
+.lower-r {
+  position: absolute;
+  right: 20px;
+  width: 60%;
+}
+
+.lower-l {
+  position: absolute;
+  left: 20px;
+  width: 60%;
+}
+
+.lower-m {
+  position: absolute;
+  width: 30%;
+  bottom: 42px;
+  height: 37.1%;
+}
+
+hr {
+  margin: 0;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+p {
+  margin: 8px;
+}
+
+.lower-buttons {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 3rem;
+
+}
+
+.share {
+  margin-top: 5rem;
+  width: 70px;
+  background-color: rgba(72, 116, 196);
+  color: white;
+}
+
+.upper-section {
+  width: 96%;
+  height: 44%;
+  margin: 10px;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+}
+.input-container{
+  width: 30%; 
+  
+
+}
+.input {
+  border: 1px solid rgba(72, 116, 196);
+  width: 100%;
+  height: 75%;
+  background-color: rgba(72, 116, 196);
+  padding: 0px 10px;
+  position: relative;
+}
+
+.table {
+  width: 65%;
+  height: 75%;
+}
+
+select {
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+}
+
+select:focus {
+  outline: none;
+}
+input {
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  height: 35px;
+  background-color:rgba(255, 192, 0);
+  border-radius: 5px;
+  border: none;
+}
+
+.input-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 90%;
+}
+label {
+  color: white;
+  margin-bottom: 0.3rem;
+  margin-top: 0.7rem;
+}
+
+
+.span-l {
+  display: inline-block;
+  font-weight: bold;
+  width: 30%;
+}
+
+.middle-buttons {
+  width: 150px;
+  margin-bottom: 1rem;
+
+}
+.middle-buttons label{
+  color: black;
+
+}
+
+.middle-buttons button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.header-section {
+  height: 20px;
+  width: 150px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.header-section p {
+margin-left: 5px;
+margin-top: 0;
+font-size: 14px;
+font-weight: bold;
+} */
+
+.section-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 150vh;
+  position: relative;
+}
+
+.section {
+  height: 140vh;
+  width: 47vw;
+  border-radius: 5%;
+  position: relative;
+  z-index: 0; /* Ensure this is lower */
+}
+
+.section-r {
+  background-color: rgba(255, 192, 0, 0.3);
+}
+
+.section-l {
+  background-color: rgba(72, 116, 196, 0.3);
+}
+
+.line {
+  width: 94%;
+  position: absolute;
+  height: 10px;
+  background-color: rgba(72, 116, 196);
+  z-index: 1; /* Ensure this is lower */
+}
+
+.up {
+  margin-bottom: 4rem;
+  width: 150px;
+  height: 35px;
+  color: white;
+}
+.up p {
+  text-align: center;
+}
+
+.down p {
+  text-align: center;
+}
+
+.down {
+  margin-top: 4rem;
+  width: 150px;
+  height: 35px;
+  color: white;
+}
+
+.lower-section {
+  height: 40%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  bottom: 10px;
+  background: rgba(72, 116, 196, 0.4); /* Slightly darker and more opaque background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: light shadow for depth */
+  border-radius: 10px; /* Optional: rounded corners */
+  position: relative;
+  z-index: 0; /* Ensure this is lower */
+}
+
+.lower-r, .lower-l, .lower-m {
+  position: absolute;
+}
+
+.lower-r {
+  right: 20px;
+  width: 60%;
+}
+
+.lower-l {
+  left: 20px;
+  width: 60%;
+}
+
+.lower-m {
+  width: 30%;
+  bottom: 42px;
+  height: 37.1%;
+  z-index: 1;
+}
+
+hr {
+  margin: 0;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+}
+
+p {
+  margin: 8px;
+}
+
+.lower-buttons {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.share {
+  margin-top: 5rem;
+  width: 70px;
+  background-color: rgba(72, 116, 196);
+  color: white;
+}
+
+.upper-section {
+  width: 96%;
+  height: 44%;
+  margin: 10px;
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  z-index: 1; /* Ensure this is higher */
+}
+
+.input-container {
+  width: 30%;
+}
+
+.input {
+  border: 1px solid rgba(72, 116, 196);
+  width: 100%;
+  height: 75%;
+  background-color: rgba(72, 116, 196);
+  padding: 0px 10px;
+  position: relative;
+  margin-top: 0.7rem;
+}
+
+.table {
+  width: 65%;
+  height: 75%;
+  z-index: 1; /* Ensure this is higher */
+}
+
+select {
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+}
+
+select:focus {
+  outline: none;
+}
+
+input {
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  height: 35px;
+  background-color: rgba(255, 192, 0);
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.input-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 90%;
+  cursor: pointer;
+}
+
+label {
+  color: white;
+  margin-bottom: 0.3rem;
+  margin-top: 0.7rem;
+}
+
+.span-l {
+  display: inline-block;
+  font-weight: bold;
+  width: 30%;
+}
+
+.middle-buttons {
+  width: 150px;
+  margin-bottom: 1rem;
+}
+
+.middle-buttons label {
+  color: black;
+}
+
+.middle-buttons button {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.header-section {
+  height: 20px;
+  width: 150px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
+.header-section p {
+  margin-left: 5px;
+  margin-top: 0;
+  font-size: 14px;
+  font-weight: bold;
 }
