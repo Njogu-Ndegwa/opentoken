@@ -33,7 +33,7 @@ export const AuthProvider = ({children}) => {
                     localStorage.setItem("user_id", user?._id)
                     setLoggedInUserDetails(user?._id)
                     Notify.success("User Logged in successfully")
-                    navigate("/dashboard/reports");
+                    navigate("/");
             }
             // setLoading(false)
         }

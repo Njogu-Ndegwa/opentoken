@@ -211,12 +211,12 @@ font-weight: bold;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 150vh;
+  height: 160vh;
   position: relative;
 }
 
 .section {
-  height: 140vh;
+  height: 150vh;
   width: 47vw;
   border-radius: 5%;
   position: relative;
