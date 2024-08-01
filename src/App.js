@@ -79,19 +79,19 @@ function App() {
   useEffect(() => {
 
     console.log(item, " Item------94-----")
-    if(item?.getItembyOemItemId?.openTokencodeGen) {
+    if (item?.getItembyOemItemId?.openTokencodeGen) {
       console.log(item?.getItembyOemItemId?.openTokenCodeDecoder, "-----80----")
-    setOpenTokenCodeGen(item?.getItembyOemItemId?.openTokencodeGen)
-    } 
-    
-     if(item?.getItembyOemItemId?.openTokenCodeDecoder) {
+      setOpenTokenCodeGen(item?.getItembyOemItemId?.openTokencodeGen)
+    }
+
+    if (item?.getItembyOemItemId?.openTokenCodeDecoder) {
       console.log(item?.getItembyOemItemId?.openTokenCodeDecoder, "-----81----")
       setOpenTokenCodeDec(item?.getItembyOemItemId?.openTokenCodeDecoder)
       console.log(item?.getItembyOemItemId?.openTokenCodeDecoder, "-----81----")
     }
-  },[item])
+  }, [item])
 
- 
+
   const handleCreateSimulatorItem = async () => {
     setOpenTokenCodeDec()
     setOpenTokenCodeGen()
@@ -117,24 +117,26 @@ function App() {
       tokenValue: '',
     },
     onSubmit: (values) => {
-      if(selectedItem) {
-      let payload = {
-        token_value: Number(values?.tokenValue),
-        token_type: values?.tokenType,   
-        secret_key: openTokenCodeGen?.secret_key, 
-        starting_code: openTokenCodeGen?.starting_code, 
-        max_count: Number(openTokenCodeGen.max_count)}
-      updateOpenTokenData({
-        variables: {
-            updateTokenDataInput: {
-                ...payload,
-                oem_item_id: selectedItem,
-            }
+      if (selectedItem) {
+        let payload = {
+          token_value: Number(values?.tokenValue),
+          token_type: values?.tokenType,
+          secret_key: openTokenCodeGen?.secret_key,
+          starting_code: openTokenCodeGen?.starting_code,
+          max_count: Number(openTokenCodeGen.max_count)
         }
-    })
-    } else {
-      Notiflix.Notify.failure("Select Item First")
-    }},
+        updateOpenTokenData({
+          variables: {
+            updateTokenDataInput: {
+              ...payload,
+              oem_item_id: selectedItem,
+            }
+          }
+        })
+      } else {
+        Notiflix.Notify.failure("Select Item First")
+      }
+    },
   });
 
   const decodeForm = useFormik({
@@ -144,19 +146,19 @@ function App() {
     onSubmit: (values) => {
       let payload = {
         token: values.token,
-        secret_key: openTokenCodeDec?.secret_key, 
+        secret_key: openTokenCodeDec?.secret_key,
         starting_code: openTokenCodeDec?.starting_code,
         max_count: Number(openTokenCodeDec?.max_count),
         used_count: Number(openTokenCodeDec?.used_count)
-    }
-    updateOpenTokenDecoderData({
+      }
+      updateOpenTokenDecoderData({
         variables: {
-            updateOpenTokenDecoderInput: {
-                ...payload,
-                oem_item_id: selectedItem
-            }
+          updateOpenTokenDecoderInput: {
+            ...payload,
+            oem_item_id: selectedItem
+          }
         }
-    })
+      })
       console.log('Token:', values.token);
     },
   });
@@ -188,25 +190,25 @@ function App() {
   );
 
   const [updateOpenTokenData, updateOpenTokenDataOpts] = useMutation(updateOpenTokenCodeGenStateMutation, {
-  onCompleted: async (data) => {
-    Notiflix.Notify.success("Encoder State Updated successfully")
+    onCompleted: async (data) => {
+      Notiflix.Notify.success("Encoder State Updated successfully")
       refetch && refetch()
     },
     onError: (err) => {
       Notiflix.Notify.failure(err.message)
     }
-});
+  });
 
-const [updateOpenTokenDecoderData, updateOpenTokenDecoderDataOpts] = useMutation(updateOpenTokenCodeDecoderStateMutation, {
-onCompleted: async (data) => {
+  const [updateOpenTokenDecoderData, updateOpenTokenDecoderDataOpts] = useMutation(updateOpenTokenCodeDecoderStateMutation, {
+    onCompleted: async (data) => {
 
-  Notiflix.Notify.success("Decoder State Updated successfully")
-    refetch && refetch()
-  },
-  onError: (err) => {
-    Notiflix.Notify.failure(err.message)
-  }
-});
+      Notiflix.Notify.success("Decoder State Updated successfully")
+      refetch && refetch()
+    },
+    onError: (err) => {
+      Notiflix.Notify.failure(err.message)
+    }
+  });
   const handleInitializeItem = () => {
     if (selectedItem) {
       intializeOpenTokenCodeGen({
@@ -238,6 +240,9 @@ onCompleted: async (data) => {
       })
     }
   }
+  const handleTokenClick = (token) => {
+    decodeForm.setFieldValue('token', token);
+  };
   return (
 
     <div className='section-container'>
@@ -258,9 +263,9 @@ onCompleted: async (data) => {
         <div className='lower-buttons'>
 
           <div>
-            <button onClick={handleInitializeItem} className='share'>
-              {inializeCodeGenOpt.loading? "Loading...": "Share"}
-            </button>
+            {/* <button onClick={handleInitializeItem} className='share'>
+              {inializeCodeGenOpt.loading ? "Loading..." : "Share"}
+            </button> */}
           </div>
           <div className='middle-buttons'>
             <div >
@@ -290,9 +295,9 @@ onCompleted: async (data) => {
           </div>
           <div>
 
-            <button className='share' onClick={handleInitializeItemDecoder}>
-            {inializeCodeDecOpt.loading? "Loading...": "Share"}
-            </button>
+            {/* <button className='share' onClick={handleInitializeItemDecoder}>
+              {inializeCodeDecOpt.loading ? "Loading..." : "Share"}
+            </button> */}
           </div>
         </div>
       </div>
@@ -327,14 +332,14 @@ onCompleted: async (data) => {
                 value={formik.values.tokenValue}
               />
 
-              <button className='input-button' type="submit">{updateOpenTokenDataOpts.loading? "Loading...": "Encode"}</button>
+              <button className='input-button' type="submit">{updateOpenTokenDataOpts.loading ? "Loading..." : "Encode"}</button>
             </form>
           </div>
           <div className='table'>
             <div className='header-section'>
               <p>Generated Token</p>
             </div>
-            <ClientPage historyData={openTokenCodeGen?.openTokenCodeHistory} isLoading={loading || getItemLoading} />
+            <ClientPage historyData={openTokenCodeGen?.openTokenCodeHistory} isLoading={loading || getItemLoading} onTokenClick={handleTokenClick} />
           </div>
         </div>
         <div className='lower-section lower-l'>
@@ -353,6 +358,11 @@ onCompleted: async (data) => {
           <hr></hr>
           <p> <span className='span-l'>Starting Code:</span>  <span className='span-r'>{openTokenCodeGen?.starting_code}</span></p>
           <hr></hr>
+          <div className='share-container'>
+            <button className='share' onClick={handleInitializeItem}>
+              {inializeCodeDecOpt.loading ? "Loading..." : "Share Secrets"}
+            </button>
+          </div>
         </div>
       </div>
       <div className='section section-r'>
@@ -368,10 +378,10 @@ onCompleted: async (data) => {
                 style={{ width: "97%" }}
                 name="token"
                 onChange={decodeForm.handleChange}
-                value={decodeForm.values.tokenValue}
+                value={decodeForm.values.token}
               />
 
-              <button className='input-button' >{updateOpenTokenDecoderDataOpts.loading? "Loading...": "Encode"}</button>
+              <button className='input-button' >{updateOpenTokenDecoderDataOpts.loading ? "Loading..." : "Decode"}</button>
             </form>
           </div>
           <div className='table'>
@@ -391,15 +401,19 @@ onCompleted: async (data) => {
           <hr></hr>
           <p> <span className='span-l'>Token Value:</span>  <span className='span-r'>{openTokenCodeDec?.token_value || "-"}</span></p>
           <hr></hr>
-          <p> <span className='span-l'>Used Count:</span>  <span className='span-r'>{openTokenCodeDec?.used_count }</span></p>
+          <p> <span className='span-l'>Used Count:</span>  <span className='span-r'>{openTokenCodeDec?.used_count}</span></p>
           <hr></hr>
-          <p> <span className='span-l'>Max Count:</span>  <span className='span-r'>{openTokenCodeDec?.max_count }</span></p>
+          <p> <span className='span-l'>Max Count:</span>  <span className='span-r'>{openTokenCodeDec?.max_count}</span></p>
           <hr></hr>
           <p> <span className='span-l'>Secret Key:</span>  <span className='span-r'>{openTokenCodeDec?.secret_key || "-"}</span></p>
           <hr></hr>
           <p> <span className='span-l'>Starting Code:</span>  <span className='span-r'>{openTokenCodeDec?.starting_code || "-"}</span></p>
           <hr></hr>
-
+          <div className='share-container'>
+            <button className='share' onClick={handleInitializeItemDecoder}>
+              {inializeCodeDecOpt.loading ? "Loading..." : "Share Secrets"}
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -211,12 +211,12 @@ font-weight: bold;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 160vh;
+  height: 100vh;
   position: relative;
 }
 
 .section {
-  height: 150vh;
+  height: 97vh;
   width: 47vw;
   border-radius: 5%;
   position: relative;
@@ -234,15 +234,16 @@ font-weight: bold;
 .line {
   width: 94%;
   position: absolute;
-  height: 10px;
+  height: 7px;
   background-color: rgba(72, 116, 196);
   z-index: 1; /* Ensure this is lower */
+  margin-bottom: 3.5rem;
 }
 
 .up {
-  margin-bottom: 4rem;
+  margin-bottom: 6.5rem;
   width: 150px;
-  height: 35px;
+  height: 25px;
   color: white;
 }
 .up p {
@@ -254,14 +255,14 @@ font-weight: bold;
 }
 
 .down {
-  margin-top: 4rem;
+  margin-top: 3rem;
   width: 150px;
-  height: 35px;
+  height: 25px;
   color: white;
 }
 
 .lower-section {
-  height: 40%;
+  height: 43%;
   border: 1px solid rgba(255, 255, 255, 0.2);
   bottom: 10px;
   background: rgba(72, 116, 196, 0.4); /* Slightly darker and more opaque background */
@@ -289,8 +290,8 @@ font-weight: bold;
 
 .lower-m {
   width: 30%;
-  bottom: 42px;
-  height: 37.1%;
+  bottom: 23px;
+  height: 40.6%;
   z-index: 1;
 }
 
@@ -300,28 +301,42 @@ hr {
 }
 
 p {
-  margin: 8px;
+
+  margin: 0.5px;
+  font-size: 14px;
 }
 
 .lower-buttons {
-  margin: 10px;
   display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
+  justify-content: center;
+  margin-top: 1rem;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
 }
+.middle-buttons {
 
+  margin-bottom: 0;
+}
+.share-container {
+  display: flex;
+  justify-content: center;
+}
 .share {
-  margin-top: 5rem;
-  width: 70px;
+  /* margin-top: 5rem; */
+  width: 30%;
   background-color: rgba(72, 116, 196);
   color: white;
+  position: absolute;
+  bottom: 10px;
+
 }
 
 .upper-section {
   width: 96%;
   height: 44%;
   margin: 10px;
-  margin-top: 3rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
   z-index: 1; /* Ensure this is higher */
@@ -334,7 +349,7 @@ p {
 .input {
   border: 1px solid rgba(72, 116, 196);
   width: 100%;
-  height: 75%;
+  height: 57%;
   background-color: rgba(72, 116, 196);
   padding: 0px 10px;
   position: relative;
@@ -343,12 +358,12 @@ p {
 
 .table {
   width: 65%;
-  height: 75%;
+  height: 57%;
   z-index: 1; /* Ensure this is higher */
 }
 
 select {
-  height: 30px;
+  height: 18px;
   border-radius: 5px;
   border: none;
 }
@@ -358,7 +373,7 @@ select:focus {
 }
 
 input {
-  height: 30px;
+  height: 18px;
   border-radius: 5px;
   border: none;
 }
@@ -368,7 +383,7 @@ input:focus {
 }
 
 button {
-  height: 35px;
+  height: 25px;
   background-color: rgba(255, 192, 0);
   border-radius: 5px;
   border: none;
@@ -377,7 +392,7 @@ button {
 
 .input-button {
   position: absolute;
-  bottom: 10px;
+  bottom: 7px;
   left: 10px;
   width: 90%;
   cursor: pointer;
@@ -385,33 +400,28 @@ button {
 
 label {
   color: white;
-  margin-bottom: 0.3rem;
-  margin-top: 0.7rem;
+  margin-bottom: 0.2rem;
+  margin-top: 0.4rem;
+  font-size: 13px;
 }
 
 .span-l {
   display: inline-block;
   font-weight: bold;
-  width: 30%;
+  width: 28%;
 }
 
-.middle-buttons {
-  width: 150px;
-  margin-bottom: 1rem;
-}
-
-.middle-buttons label {
+.lower-buttons label {
   color: black;
 }
 
-.middle-buttons button {
+.lower-buttons button {
   margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 
 .header {
   text-align: center;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
