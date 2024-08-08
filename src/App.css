@@ -232,6 +232,11 @@ label {
   width: 28%;
   margin-left: 10px;
 }
+.disabled {
+  background-color: rgba(255, 0, 0, 0.41) !important; /* Change background color */
+  cursor: not-allowed; /* Change cursor */
+  /* Add other styles as needed */
+}
 
 .status {
   display: inline-flex;

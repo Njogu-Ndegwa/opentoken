@@ -13,10 +13,11 @@ import { initializeOpenTokenCodeGenMutation } from './pages/mutations';
 import { initializeOpenTokenCodeDecoderMutation } from './pages/mutations';
 import { handleGQLErrors } from "./utils/gqlErrors"
 import Notiflix from 'notiflix';
-import { 
-  updateOpenTokenCodeDecoderStateMutation, 
-  updateOpenTokenCodeGenStateMutation, 
-  deductDeviceCalenderDaysMutation } from './pages/mutations';
+import {
+  updateOpenTokenCodeDecoderStateMutation,
+  updateOpenTokenCodeGenStateMutation,
+  deductDeviceCalenderDaysMutation
+} from './pages/mutations';
 
 function App() {
   const [itemData, setData] = useState([])
@@ -52,7 +53,7 @@ function App() {
 
   const [deductDeviceCalenderDays, deductDeviceCalenderDaysOpts] = useMutation(deductDeviceCalenderDaysMutation, {
     onCompleted: (data) => {
-      refetchClientItems && refetchClientItems();
+      refetch && refetch()
     },
     onError: (error) => {
       // handleGQLErrors(notify, err);
@@ -133,21 +134,25 @@ function App() {
     },
     onSubmit: (values) => {
       if (selectedItem) {
-        let payload = {
-          token_value: Number(values?.tokenValue),
-          token_type: values?.tokenType,
-          secret_key: openTokenCodeGen?.secret_key,
-          starting_code: openTokenCodeGen?.starting_code,
-          max_count: Number(openTokenCodeGen.max_count)
-        }
-        updateOpenTokenData({
-          variables: {
-            updateTokenDataInput: {
-              ...payload,
-              oem_item_id: selectedItem,
-            }
+        if (!openTokenCodeGen) {
+          Notiflix.Notify.failure("Item encoder not initialized")
+        } else {
+          let payload = {
+            token_value: Number(values?.tokenValue),
+            token_type: values?.tokenType,
+            secret_key: openTokenCodeGen?.secret_key,
+            starting_code: openTokenCodeGen?.starting_code,
+            max_count: Number(openTokenCodeGen.max_count)
           }
-        })
+          updateOpenTokenData({
+            variables: {
+              updateTokenDataInput: {
+                ...payload,
+                oem_item_id: selectedItem,
+              }
+            }
+          })
+        }
       } else {
         Notiflix.Notify.failure("Select Item First")
       }
@@ -159,21 +164,29 @@ function App() {
       token: '',
     },
     onSubmit: (values) => {
-      let payload = {
-        token: values.token,
-        secret_key: openTokenCodeDec?.secret_key,
-        starting_code: openTokenCodeDec?.starting_code,
-        max_count: Number(openTokenCodeDec?.max_count),
-        used_count: Number(openTokenCodeDec?.used_count)
-      }
-      updateOpenTokenDecoderData({
-        variables: {
-          updateOpenTokenDecoderInput: {
-            ...payload,
-            oem_item_id: selectedItem
+      if (selectedItem) {
+        if (!openTokenCodeDec) {
+          Notiflix.Notify.failure("Item decoder not initialized")
+        } else {
+          let payload = {
+            token: values.token,
+            secret_key: openTokenCodeDec?.secret_key,
+            starting_code: openTokenCodeDec?.starting_code,
+            max_count: Number(openTokenCodeDec?.max_count),
+            used_count: Number(openTokenCodeDec?.used_count)
           }
+          updateOpenTokenDecoderData({
+            variables: {
+              updateOpenTokenDecoderInput: {
+                ...payload,
+                oem_item_id: selectedItem
+              }
+            }
+          })
         }
-      })
+      } else {
+        Notiflix.Notify.failure("Select Item First")
+      }
       console.log('Token:', values.token);
     },
   });
@@ -316,7 +329,7 @@ function App() {
               </select>
             </div>
             <button onClick={handleCreateSimulatorItem} style={{ width: "100%", }}>
-            {createItemOpts.loading ? "Loading..." : "New"}
+              {createItemOpts.loading ? "Loading..." : "New"}
             </button>
           </div>
           <div>
@@ -449,15 +462,20 @@ function App() {
           <hr></hr>
         </div>
         <div className='device-state '>
-        <div style={{ display: "flex", justifyContent: "space-between", paddingRight: "10px", paddingLeft: "10px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", paddingRight: "10px", paddingLeft: "10px" }}>
             <h2 className='header'>Device State</h2>
             <div className='share-container'>
-              <button className='share calender' onClick={handleDeductDeviceState}>
+              <button
+                disabled={!openTokenCodeDec?.payg_enabled}
+                className={`share calender ${!openTokenCodeDec?.payg_enabled ? 'disabled' : ''}`}
+                onClick={handleDeductDeviceState}
+              >
                 {deductDeviceCalenderDaysOpts.loading ? "Loading..." : "Calender day"}
               </button>
+
             </div>
           </div>
-          <p> <span className='span-l'>Remaining Credit Days:</span>  <span className='span-r'>{openTokenCodeDec?.remaining_credit_days}</span></p>
+          <p> <span className='span-l'>Remaining Credit Days:</span>  <span className='span-r'>{ openTokenCodeDec?.payg_enabled ? openTokenCodeDec?.remaining_credit_days : "unlocked"}</span></p>
           <hr></hr>
           <p> <span className='span-l'>PayG Enabled:</span>  <span className='span-r'>{openTokenCodeDec?.payg_enabled?.toString()}</span></p>
           <hr></hr>
