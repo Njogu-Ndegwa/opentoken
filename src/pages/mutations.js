@@ -34,8 +34,16 @@ ${coderDecoderFragment}
     updateOpenTokenDecoder(updateOpenTokenDecoderInput: $updateOpenTokenDecoderInput){
       ...CodeDecoder
     }
+  } 
+  `
+
+  export const deductDeviceCalenderDaysMutation = gql `
+  ${coderDecoderFragment}
+  mutation DeductDeviceCalenderDays($deductDeviceCalenderDaysInput: DeductDeviceCalenderDaysInput!) {
+  deductDeviceCalenderDays(deductDeviceCalenderDaysInput: $deductDeviceCalenderDaysInput) {
+      ...CodeDecoder
   }
-    
+}
   `
 
 

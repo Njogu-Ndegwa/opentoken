@@ -13,13 +13,17 @@ import { initializeOpenTokenCodeGenMutation } from './pages/mutations';
 import { initializeOpenTokenCodeDecoderMutation } from './pages/mutations';
 import { handleGQLErrors } from "./utils/gqlErrors"
 import Notiflix from 'notiflix';
-import { updateOpenTokenCodeDecoderStateMutation, updateOpenTokenCodeGenStateMutation } from './pages/mutations';
+import { 
+  updateOpenTokenCodeDecoderStateMutation, 
+  updateOpenTokenCodeGenStateMutation, 
+  deductDeviceCalenderDaysMutation } from './pages/mutations';
 
 function App() {
   const [itemData, setData] = useState([])
   const [selectedItem, setSelectedItem] = useState('');
   const [openTokenCodeGen, setOpenTokenCodeGen] = useState()
   const [openTokenCodeDec, setOpenTokenCodeDec] = useState()
+  const [deviceState, setDeviceState] = useState()
   const handleSelectChange = (event) => {
     setSelectedItem(event.target.value);
     setOpenTokenCodeDec()
@@ -45,6 +49,17 @@ function App() {
 
   const [getItem, { data: item, loading: getItemLoading, refetch }] = useLazyGetItembyOemItemIdQuery(
     { oemItemId: selectedItem })
+
+  const [deductDeviceCalenderDays, deductDeviceCalenderDaysOpts] = useMutation(deductDeviceCalenderDaysMutation, {
+    onCompleted: (data) => {
+      refetchClientItems && refetchClientItems();
+    },
+    onError: (error) => {
+      // handleGQLErrors(notify, err);
+      Notiflix.Notify.failure(error.message)
+    },
+  })
+
 
   const [createSingleItem, createItemOpts] = useMutation(createSingleItemMutation, {
     onCompleted: (data) => {
@@ -243,6 +258,17 @@ function App() {
   const handleTokenClick = (token) => {
     decodeForm.setFieldValue('token', token);
   };
+
+  const handleDeductDeviceState = () => {
+    deductDeviceCalenderDays({
+      variables: {
+        deductDeviceCalenderDaysInput: {
+          oem_item_id: selectedItem
+        }
+      }
+    })
+  }
+
   return (
 
     <div className='section-container'>
@@ -290,7 +316,7 @@ function App() {
               </select>
             </div>
             <button onClick={handleCreateSimulatorItem} style={{ width: "100%", }}>
-              New
+            {createItemOpts.loading ? "Loading..." : "New"}
             </button>
           </div>
           <div>
@@ -343,7 +369,15 @@ function App() {
           </div>
         </div>
         <div className='lower-section lower-l'>
-          <h2 className='header'>Encoder State</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", paddingRight: "10px", paddingLeft: "10px" }}>
+            <h2 className='header'>Encoder State</h2>
+            <div className='share-container'>
+              <button className='share' onClick={handleInitializeItem}>
+                {inializeCodeGenOpt.loading ? "Loading..." : "Get Secrets"}
+              </button>
+            </div>
+          </div>
+
           <p> <span className='span-l'>Oem Item Id:</span>  <span className='span-r'>{selectedItem || "-"}</span></p>
           <hr></hr>
           <p> <span className='span-l'>Token:</span>  <span className='span-r'>{openTokenCodeGen?.token || "-"}</span></p>
@@ -358,11 +392,7 @@ function App() {
           <hr></hr>
           <p> <span className='span-l'>Starting Code:</span>  <span className='span-r'>{openTokenCodeGen?.starting_code}</span></p>
           <hr></hr>
-          <div className='share-container'>
-            <button className='share' onClick={handleInitializeItem}>
-              {inializeCodeDecOpt.loading ? "Loading..." : "Share Secrets"}
-            </button>
-          </div>
+
         </div>
       </div>
       <div className='section section-r'>
@@ -392,7 +422,15 @@ function App() {
           </div>
         </div>
         <div className='lower-section lower-r'>
-          <h2 className='header'>Decoder State</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", paddingRight: "10px", paddingLeft: "10px" }}>
+            <h2 className='header'>Decoder State</h2>
+            <div className='share-container'>
+              <button className='share' onClick={handleInitializeItemDecoder}>
+                {inializeCodeDecOpt.loading ? "Loading..." : "Get Secrets"}
+              </button>
+            </div>
+          </div>
+
           <p> <span className='span-l'>Oem Item Id:</span>  <span className='span-r'>{selectedItem}</span></p>
           <hr></hr>
           <p> <span className='span-l'>Token:</span>  <span className='span-r'>{openTokenCodeDec?.token || "-"}</span></p>
@@ -409,11 +447,22 @@ function App() {
           <hr></hr>
           <p> <span className='span-l'>Starting Code:</span>  <span className='span-r'>{openTokenCodeDec?.starting_code || "-"}</span></p>
           <hr></hr>
-          <div className='share-container'>
-            <button className='share' onClick={handleInitializeItemDecoder}>
-              {inializeCodeDecOpt.loading ? "Loading..." : "Share Secrets"}
-            </button>
+        </div>
+        <div className='device-state '>
+        <div style={{ display: "flex", justifyContent: "space-between", paddingRight: "10px", paddingLeft: "10px" }}>
+            <h2 className='header'>Device State</h2>
+            <div className='share-container'>
+              <button className='share calender' onClick={handleDeductDeviceState}>
+                {deductDeviceCalenderDaysOpts.loading ? "Loading..." : "Calender day"}
+              </button>
+            </div>
           </div>
+          <p> <span className='span-l'>Remaining Credit Days:</span>  <span className='span-r'>{openTokenCodeDec?.remaining_credit_days}</span></p>
+          <hr></hr>
+          <p> <span className='span-l'>PayG Enabled:</span>  <span className='span-r'>{openTokenCodeDec?.payg_enabled?.toString()}</span></p>
+          <hr></hr>
+          <p> <span className='span-l'>Output Enabled:</span>  <span className='span-r'>{openTokenCodeDec?.output_enabled?.toString()}</span></p>
+          <hr></hr>
         </div>
       </div>
     </div>

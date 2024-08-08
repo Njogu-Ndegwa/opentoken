@@ -40,9 +40,11 @@ export const coderDecoderFragment = gql`
         token_type
         token_value
         max_count
-        remaining_days
         used_count
         starting_code
+        remaining_credit_days
+        payg_enabled
+        output_enabled
     }
 }
 `;
@@ -77,9 +79,11 @@ ${openTokeCodeHistoryFragment}
         token_type
         token_value
         max_count
-        remaining_days
         used_count
         starting_code
+        remaining_credit_days
+        payg_enabled
+        output_enabled
         openTokenCodeHistory {
         ...OpenTokenCodeHistory
         }

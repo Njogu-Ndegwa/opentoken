@@ -28,7 +28,13 @@ export const useLocalStorage = (keyName, defaultValue) => {
 
 export const isTokenExpired = (token) => {
     if (!token) return true;
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    const expirationDate = payload.exp * 1000;
-    return Date.now() > expirationDate;
+
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expirationDate = payload.exp * 1000;
+        return Date.now() > expirationDate;
+    } catch (e) {
+        console.error('Invalid token format:', e);
+        return true;
+    }
 };
