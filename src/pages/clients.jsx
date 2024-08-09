@@ -16,7 +16,7 @@ export function ClientPage({ historyData, isLoading, onTokenClick }) {
                 <tbody>
                     {isLoading ? (
                         <tr>
-                            <td colSpan="4" className="loading">Loading...</td>
+                            <td colSpan="4" style={{textAlign: "center"}} className="loading">Loading...</td>
                         </tr>
                     ) : (
                         historyData?.map((item, index) => (
