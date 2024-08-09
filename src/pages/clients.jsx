@@ -22,7 +22,7 @@ export function ClientPage({ historyData, isLoading, onTokenClick }) {
                         historyData?.map((item, index) => (
                             <tr key={item._id}>
                                 <td>{index + 1}</td>
-                                <td onClick={() => onTokenClick(item.token)} style={{ cursor: 'pointer' }}>
+                                <td onClick={() => onTokenClick(item.token)} style={{ cursor: 'pointer', fontWeight: 500 }}>
                                     {item.token}
                                 </td>
                                 <td>{item.token_type}</td>

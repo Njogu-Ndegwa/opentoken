@@ -27,4 +27,5 @@ tr:nth-child(odd) {
 td {
     padding: 3px;
     border: 1.5px solid #fff;
+    text-align: center;
 }

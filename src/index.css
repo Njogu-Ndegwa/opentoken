@@ -2,22 +2,7 @@
 body {
   margin: 0;
 }
-p {
-  font-family: "Roboto", sans-serif;
-}
 
-span {
-  font-family: "Roboto", sans-serif;
-}
-
-label {
-  font-family: "Roboto", sans-serif;
-}
-
-td {
-  font-family: "Roboto", sans-serif;
-}
-
-th {
+p, h2, span, label, td, th {
   font-family: "Roboto", sans-serif;
 }
