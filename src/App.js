@@ -25,10 +25,14 @@ function App() {
   const [openTokenCodeGen, setOpenTokenCodeGen] = useState()
   const [openTokenCodeDec, setOpenTokenCodeDec] = useState()
   const [deviceState, setDeviceState] = useState()
+  const [secretKey, setSecretKey] = useState();
+  const [startingCode, setStartingCode] = useState();
   const handleSelectChange = (event) => {
     setSelectedItem(event.target.value);
     setOpenTokenCodeDec()
     setOpenTokenCodeGen()
+    setStartingCode("")
+    setSecretKey("")
   };
   const [
     getClientItems,
@@ -64,7 +68,10 @@ function App() {
 
   const [createSingleItem, createItemOpts] = useMutation(createSingleItemMutation, {
     onCompleted: (data) => {
+      console.log(startingCode, "Starting Code--69")
+      console.log(secretKey, "Secret Key--70")
       refetchClientItems && refetchClientItems();
+      
     },
     onError: (err) => {
       // handleGQLErrors(notify, err);
@@ -96,14 +103,15 @@ function App() {
 
     console.log(item, " Item------94-----")
     if (item?.getItembyOemItemId?.openTokencodeGen) {
-      console.log(item?.getItembyOemItemId?.openTokenCodeDecoder, "-----80----")
+      setSecretKey(item?.getItembyOemItemId?.openTokencodeGen?.secret_key || "")
+      setStartingCode(item?.getItembyOemItemId?.openTokencodeGen?.starting_code || "")
       setOpenTokenCodeGen(item?.getItembyOemItemId?.openTokencodeGen)
     }
 
     if (item?.getItembyOemItemId?.openTokenCodeDecoder) {
-      console.log(item?.getItembyOemItemId?.openTokenCodeDecoder, "-----81----")
       setOpenTokenCodeDec(item?.getItembyOemItemId?.openTokenCodeDecoder)
-      console.log(item?.getItembyOemItemId?.openTokenCodeDecoder, "-----81----")
+      setSecretKey(item?.getItembyOemItemId?.openTokenCodeDecoder?.secret_key || "")
+      setStartingCode(item?.getItembyOemItemId?.openTokenCodeDecoder?.starting_code || "")
     }
   }, [item])
 
@@ -111,6 +119,8 @@ function App() {
   const handleCreateSimulatorItem = async () => {
     setOpenTokenCodeDec()
     setOpenTokenCodeGen()
+    setSecretKey('')
+    setStartingCode('')
     await createSingleItem({
       variables: {
         createItemInput: {
@@ -238,14 +248,25 @@ function App() {
     }
   });
   const handleInitializeItem = () => {
+    console.log(secretKey, "Secret Key")
+    console.log(startingCode, "Starting Code-----261---")
+    if (!isValidStartingCode(startingCode)) {
+      Notiflix.Notify.failure('Starting Code must be an integer with 9 digits.');
+      return;
+    }
+
+    if (!isValidSecretKey(secretKey)) {
+      Notiflix.Notify.failure('Secret Key must be a 32-character hexadecimal string.');
+      return;
+    }
     if (selectedItem) {
       intializeOpenTokenCodeGen({
         variables: {
           initializeOpenTokenCodeGenInput: {
             oem_item_id: selectedItem,
             max_count: 0,
-            secret_key: "0123456789abcdef0123456789abcdef",
-            starting_code: "123456789",
+            secret_key: secretKey,
+            starting_code: startingCode,
             used_count: 0
           }
         }
@@ -254,14 +275,24 @@ function App() {
   }
 
   const handleInitializeItemDecoder = () => {
+
+    if (!isValidStartingCode(startingCode)) {
+      Notiflix.Notify.failure('Starting Code must be an integer with 9 digits.');
+      return;
+    }
+
+    if (!isValidSecretKey(secretKey)) {
+      Notiflix.Notify.failure('Secret Key must be a 32-character hexadecimal string.');
+      return;
+    }
     if (selectedItem) {
       intializeOpenTokenCodeDecoder({
         variables: {
           initializeOpenTokenCodeGenInput: {
             oem_item_id: selectedItem,
             max_count: 0,
-            secret_key: "0123456789abcdef0123456789abcdef",
-            starting_code: "123456789",
+            secret_key: secretKey,
+            starting_code: startingCode,
             used_count: 0
           }
         }
@@ -282,6 +313,24 @@ function App() {
     })
   }
 
+  const handleSecretKeyChange = (event) => {
+    setSecretKey(event.target.value);
+  }
+  
+  const handleStartingCodeChange = (event) => {
+    setStartingCode(event.target.value);
+  }
+
+  function isValidStartingCode(code) {
+    const isNineDigits = /^\d{9}$/.test(code); // Check if it's an integer with 9 digits
+    return isNineDigits;
+  }
+
+  function isValidSecretKey(key) {
+    const isHex32 = /^[0-9a-fA-F]{32}$/.test(key); // Check if it's a hexadecimal with 32 characters
+    return isHex32;
+  }
+
   return (
 
     <div className='section-container'>
@@ -290,9 +339,27 @@ function App() {
       <div className='line down'> <p>Shared Secrets</p></div>
       <div className='lower-section lower-m'>
         <h2 className='header'>Device Data</h2>
-        <p> <span className='span-l'>Secret Key:</span>  <span className='span-r'>0123456789abcdef0123456789abcdef</span></p>
-        <hr></hr>
-        <p> <span className='span-l'>Starting Code:</span>  <span className='span-r'>123456789</span></p>
+        <p>
+          <span className="span-l">Secret Key:</span>
+          <input  
+          type="text" 
+          className="span-r" 
+          placeholder='Enter the Secret Key'
+          value={secretKey}
+          onChange={handleSecretKeyChange}
+          />
+        </p>
+        <hr />
+        <p>
+          <span className="span-l">Starting Code:</span>
+          <input 
+          type="text" 
+          className="span-r" 
+          placeholder='Enter Starting Code'
+          value={startingCode}
+          onChange={handleStartingCodeChange}
+          />
+        </p>
         <hr></hr>
         <p> <span className='span-l'>Max Count:</span>  <span className='span-r'>0</span></p>
         <hr></hr>
@@ -475,7 +542,7 @@ function App() {
 
             </div>
           </div>
-          <p> <span className='span-l'>Remaining Credit Days:</span>  <span className='span-r'>{ openTokenCodeDec?.payg_enabled ? openTokenCodeDec?.remaining_credit_days : "unlocked"}</span></p>
+          <p> <span className='span-l'>Remaining Credit Days:</span>  <span className='span-r'>{openTokenCodeDec?.payg_enabled ? openTokenCodeDec?.remaining_credit_days : "unlocked"}</span></p>
           <hr></hr>
           <p> <span className='span-l'>PayG Enabled:</span>  <span className='span-r'>{openTokenCodeDec?.payg_enabled?.toString()}</span></p>
           <hr></hr>

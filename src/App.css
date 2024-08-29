@@ -81,6 +81,22 @@
   width: 40%;
 }
 
+.span-r {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  width: 60%;
+}
+
+.span-r:focus {
+  outline: none;
+}
+
 .lower-r, .lower-l, .lower-m {
   position: absolute;
 }

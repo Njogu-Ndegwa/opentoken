@@ -31,7 +31,6 @@ const link = createHttpLink({
 
 export const tokenLink = setContext((_, context) => {
   const authToken = getToken();
-  console.log(authToken, "-----26-----")
   return {
     ...context,
     headers: {
